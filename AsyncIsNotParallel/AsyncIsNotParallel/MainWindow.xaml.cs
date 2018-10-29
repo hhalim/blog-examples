@@ -42,11 +42,13 @@ namespace AsyncIsNotParallel
             for (int i = 0; i < 5; i++)
             {
                 // perform some asynchronous task in various ways
-                // await Task.Yield();       // yields immediately
+                // await Task.Yield();       //Time:5000 yields immediately
+
                 // await Task.Delay(0);      // continues synchronously
-                // await Task.Delay(100);     // continues asynchronously on UI thread
-                // await Task.Delay(0).ConfigureAwait(false);    // continues synchronously
-                // await Task.Delay(100).ConfigureAwait(false);   // continues asynchronously on any thread
+                // await Task.Delay(0).ConfigureAwait(false);    // time: 5000ms; continues synchronously
+
+                //await Task.Delay(100);     // SLOW time 5114ms; continues asynchronously on UI thread
+                await Task.Delay(100).ConfigureAwait(false);   // BEST: time 3000s; continues asynchronously on any thread
 
                 var startTime = sw.ElapsedMilliseconds;
 
